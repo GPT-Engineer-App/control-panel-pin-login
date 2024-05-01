@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Input, VStack, Text, useToast, Heading } from "@chakra-ui/react";
+import { Box, Button, Container, Input, VStack, Text, useToast, Heading, Flex } from "@chakra-ui/react";
 import { FaLock, FaUnlock } from "react-icons/fa";
 
 const Index = () => {
@@ -44,23 +44,25 @@ const Index = () => {
   return (
     <Container centerContent>
       <VStack spacing={4} mt="20">
-        <Heading as="h1" size="xl">
-          Control Panel
-        </Heading>
+        <Flex justifyContent="space-between" width="full" alignItems="center">
+          <Heading as="h1" size="xl">
+            Control Panel
+          </Heading>
+          {isLoggedIn && (
+            <Button leftIcon={<FaUnlock />} colorScheme="red" onClick={handleLogout}>
+              Logout
+            </Button>
+          )}
+        </Flex>
         {!isLoggedIn ? (
-          <>
+          <VStack spacing={4}>
             <Input placeholder="Enter 4-digit PIN" value={pin} onChange={(e) => setPin(e.target.value)} maxLength={4} type="password" />
             <Button leftIcon={<FaLock />} colorScheme="blue" onClick={handleLogin} isDisabled={pin.length !== 4}>
               Login
             </Button>
-          </>
+          </VStack>
         ) : (
-          <>
-            <Text>Welcome to your control panel!</Text>
-            <Button leftIcon={<FaUnlock />} colorScheme="red" onClick={handleLogout}>
-              Logout
-            </Button>
-          </>
+          <Text>Welcome to your control panel!</Text>
         )}
       </VStack>
     </Container>
